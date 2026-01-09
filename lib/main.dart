@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'features/auth/screens/login_screen.dart';
 
-void main() async{
+void main() {
   runApp(const MyApp());
 }
 
@@ -13,56 +11,111 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.teal,
-        body: CustomButton(),
+        backgroundColor: const Color(0xFF14A3A3), // 배경색 (이미지와 유사한 청록색)
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // 1. 카카오 버튼
+              SocialLoginButton(
+                text: '카카오톡으로 시작',
+                backgroundColor: const Color(0xFFFFE812),
+                textColor: Colors.black,
+                icon: Icons.chat_bubble,
+              ),
+              const SizedBox(height: 12), // 버튼 사이 간격
+              // 2. 구글 버튼 (요청하신 부분)
+              SocialLoginButton(
+                text: '구글로 시작',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+                icon: Icons.g_mobiledata,
+                // 실제 프로젝트에선 이미지 로고 사용 권장
+                isGoogle: true,
+              ),
+              // ... 기존 카카오, 구글 버튼 아래에 추가
+              const SizedBox(height: 12), // 버튼 사이 간격
+              // 3. 이메일 가입 버튼 (진회색)
+              SocialLoginButton(
+                text: '이메일로 가입',
+                backgroundColor: const Color(0xFF424242), // 진회색
+                textColor: Colors.white,
+                icon: Icons.email_outlined,
+              ),
+
+              const SizedBox(height: 12),
+
+              // 4. 이메일 로그인 버튼 (흰색 배경에 테두리)
+              SocialLoginButton(
+                text: '이메일 로그인',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+                icon: Icons.email,
+                isGoogle: true, // 테두리를 그리기 위해 true로 설정
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class CustomButton extends StatelessWidget {
+// 공통으로 사용할 버튼 위젯
+class SocialLoginButton extends StatelessWidget {
+  final String text;
+  final Color backgroundColor;
+  final Color textColor;
+  final IconData icon;
+  final bool isGoogle;
+
+  const SocialLoginButton({
+    required this.text,
+    required this.backgroundColor,
+    required this.textColor,
+    required this.icon,
+    this.isGoogle = false,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      child: SizedBox(
-        width: double.infinity, // 가로를 꽉 채우기
-        height: 60, // 버튼의 높이
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFFFE812), // 카카오 노란색 배경
-            foregroundColor: Colors.black87,    // 텍스트 및 아이콘 색상
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30), // 완전히 둥근 모서리
-            ),
-            elevation: 0, // 입체감 제거 (이미지처럼 평면적인 느낌)
+    return SizedBox(
+      width: double.infinity,
+      height: 60,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor,
+          foregroundColor: textColor,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+            // 구글 버튼처럼 배경이 흰색일 때 테두리 추가
+            side: isGoogle
+                ? BorderSide(color: Colors.grey.shade300)
+                : BorderSide.none,
           ),
-          onPressed: () {},
-          child: Row(
-            children: [
-              // 왼쪽 아이콘 영역
-              Icon(Icons.chat_bubble, size: 24),
-
-              // 텍스트를 중앙에 맞추기 위한 여백
-              Expanded(
-                child: Center(
-                  child: Text(
-                    '카카오톡으로 시작',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+        ),
+        onPressed: () {
+          print('$text 클릭됨');
+        },
+        child: Row(
+          children: [
+            Icon(icon, size: 28),
+            Expanded(
+              child: Center(
+                child: Text(
+                  text,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-
-              // 오른쪽 대칭을 맞추기 위한 투명 아이콘 (텍스트를 정중앙으로 밀어줌)
-              Opacity(
-                opacity: 0,
-                child: Icon(Icons.chat_bubble, size: 24),
-              ),
-            ],
-          ),
+            ),
+            // 좌우 균형을 위한 빈 공간
+            const SizedBox(width: 28),
+          ],
         ),
       ),
     );
