@@ -15,7 +15,12 @@ class LoginSelectionScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 400), // Top padding
+            const SizedBox(height: 200), // Top padding
+            Image.asset(
+              'assets/login_logo.png',
+              height: 150, // Adjust height as needed
+            ),
+            const SizedBox(height: 30), // Spacing between image and text
             const Text(
               '혼밥 메이트를 찾는 가장 쉬운 방법',
               textAlign: TextAlign.center,
