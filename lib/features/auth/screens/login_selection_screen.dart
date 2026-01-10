@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'email_signup_screen_step1.dart';
+
 class LoginSelectionScreen extends StatelessWidget {
   const LoginSelectionScreen({Key? key}) : super(key: key);
 
@@ -152,7 +154,11 @@ class SocialLoginButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          print('$text 클릭됨');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const EmailSignUpScreenStep1(),
+            ),
+          );
         },
         child: Row(
           children: [
