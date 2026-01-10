@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 class LoginSelectionScreen extends StatelessWidget {
   const LoginSelectionScreen({Key? key}) : super(key: key);
 
@@ -10,8 +13,19 @@ class LoginSelectionScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(height: 400), // Top padding
+            const Text(
+              '혼밥 메이트를 찾는 가장 쉬운 방법',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Spacer(), // Pushes everything below it to the bottom
             // 1. 카카오 버튼
             SocialLoginButton(
               text: '카카오톡으로 시작',
@@ -48,6 +62,47 @@ class LoginSelectionScreen extends StatelessWidget {
               textColor: Colors.black,
               icon: Icons.email,
               isGoogle: true, // 테두리를 그리기 위해 true로 설정
+            ),
+            const SizedBox(height: 50), // Bottom padding
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: '시작과 동시에 혼밥메이트의 ',
+                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                  children: [
+                    TextSpan(
+                      text: '서비스 약관',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          launchUrl(Uri.parse('https://www.naver.com'));
+                        },
+                    ),
+                    const TextSpan(
+                      text: ', ',
+                    ),
+                    TextSpan(
+                      text: '개인정보 취급 방침',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          launchUrl(Uri.parse('https://www.naver.com'));
+                        },
+                    ),
+                    const TextSpan(
+                      text: '에 동의하게 됩니다.',
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

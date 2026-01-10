@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToLoginSelection() async {
-    await Future.delayed(const Duration(seconds: 2), () {}); // 1초 대기
+    await Future.delayed(const Duration(seconds: 2), () {}); // 2초 대기
     if (!mounted) return;
     Navigator.pushReplacement(
       context,
