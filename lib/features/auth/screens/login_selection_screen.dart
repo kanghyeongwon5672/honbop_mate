@@ -36,7 +36,7 @@ class LoginSelectionScreen extends StatelessWidget {
               text: '카카오톡으로 시작',
               backgroundColor: const Color(0xFFFFE812),
               textColor: Colors.black,
-              icon: Icons.chat_bubble,
+              iconWidget: Image.asset('assets/kakao_login.png', height: 50, width: 50),
             ),
             const SizedBox(height: 12), // 버튼 사이 간격
             // 2. 구글 버튼 (요청하신 부분)
@@ -44,7 +44,7 @@ class LoginSelectionScreen extends StatelessWidget {
               text: '구글로 시작',
               backgroundColor: Colors.white,
               textColor: Colors.black,
-              icon: Icons.g_mobiledata,
+              iconWidget: Image.asset('assets/google_login.png', height: 35, width: 35),
               // 실제 프로젝트에선 이미지 로고 사용 권장
               isGoogle: true,
             ),
@@ -55,7 +55,7 @@ class LoginSelectionScreen extends StatelessWidget {
               text: '이메일로 가입',
               backgroundColor: const Color(0xFF424242), // 진회색
               textColor: Colors.white,
-              icon: Icons.email_outlined,
+              iconWidget: Icon(Icons.email_outlined, size: 28),
             ),
 
             const SizedBox(height: 12),
@@ -65,7 +65,7 @@ class LoginSelectionScreen extends StatelessWidget {
               text: '이메일 로그인',
               backgroundColor: Colors.white,
               textColor: Colors.black,
-              icon: Icons.email,
+              iconWidget: Icon(Icons.email, size: 28),
               isGoogle: true, // 테두리를 그리기 위해 true로 설정
             ),
             const SizedBox(height: 50), // Bottom padding
@@ -121,7 +121,7 @@ class SocialLoginButton extends StatelessWidget {
   final String text;
   final Color backgroundColor;
   final Color textColor;
-  final IconData icon;
+  final Widget iconWidget; // Changed from IconData icon;
   final bool isGoogle;
 
   const SocialLoginButton({
@@ -129,7 +129,7 @@ class SocialLoginButton extends StatelessWidget {
     required this.text,
     required this.backgroundColor,
     required this.textColor,
-    required this.icon,
+    required this.iconWidget, // Changed from required this.icon,
     this.isGoogle = false,
   }) : super(key: key);
 
@@ -156,7 +156,7 @@ class SocialLoginButton extends StatelessWidget {
         },
         child: Row(
           children: [
-            Icon(icon, size: 28),
+            iconWidget, // Replaced Icon(icon, size: 28) with iconWidget
             Expanded(
               child: Center(
                 child: Text(
