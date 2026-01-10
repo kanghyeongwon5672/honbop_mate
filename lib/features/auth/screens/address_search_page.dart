@@ -10,7 +10,7 @@ class AddressSearchPage extends StatefulWidget {
 }
 
 class _AddressSearchPageState extends State<AddressSearchPage> {
-  late final WebViewController _controller;
+  WebViewController? _controller;
   DaumPostcodeLocalServer? _server;
   bool _isLoading = true;
 
@@ -24,7 +24,7 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
     _server = DaumPostcodeLocalServer();
     await _server!.start();
 
-    _controller = WebViewController()
+    final controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
@@ -44,13 +44,19 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
       ..addJavaScriptChannel(
         'DaumPostcode',
         onMessageReceived: (JavaScriptMessage message) {
-          final model = DaumPostcodeCallbackParser.fromPostMessage(message.message);
-          if (model != null) {
-            Navigator.pop(context, model);
+          final result = DaumPostcodeCallbackParser.fromPostMessage(message.message);
+          if (result != null) {
+            Navigator.pop(context, result);
           }
         },
       )
-      ..loadRequest(Uri.parse(_server!.url + DaumPostcodeAssets.postMessage));
+      ..loadRequest(Uri.parse('${_server!.url}/${DaumPostcodeAssets.postMessage}'));
+
+    if (mounted) {
+      setState(() {
+        _controller = controller;
+      });
+    }
   }
 
   @override
@@ -67,8 +73,8 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
       ),
       body: Stack(
         children: [
-          if (_server != null)
-            WebViewWidget(controller: _controller),
+          if (_controller != null)
+            WebViewWidget(controller: _controller!),
           if (_isLoading)
             const Center(
               child: CircularProgressIndicator(),

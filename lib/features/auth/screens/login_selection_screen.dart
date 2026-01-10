@@ -39,6 +39,9 @@ class LoginSelectionScreen extends StatelessWidget {
               backgroundColor: const Color(0xFFFFE812),
               textColor: Colors.black,
               iconWidget: Image.asset('assets/kakao_login.png', height: 50, width: 50),
+              onPressedCallback: () {
+                print('카카오톡으로 시작 버튼 클릭됨');
+              },
             ),
             const SizedBox(height: 12), // 버튼 사이 간격
             // 2. 구글 버튼 (요청하신 부분)
@@ -47,8 +50,10 @@ class LoginSelectionScreen extends StatelessWidget {
               backgroundColor: Colors.white,
               textColor: Colors.black,
               iconWidget: Image.asset('assets/google_login.png', height: 35, width: 35),
-              // 실제 프로젝트에선 이미지 로고 사용 권장
               isGoogle: true,
+              onPressedCallback: () {
+                print('구글로 시작 버튼 클릭됨');
+              },
             ),
             // ... 기존 카카오, 구글 버튼 아래에 추가
             const SizedBox(height: 12), // 버튼 사이 간격
@@ -58,6 +63,13 @@ class LoginSelectionScreen extends StatelessWidget {
               backgroundColor: const Color(0xFF424242), // 진회색
               textColor: Colors.white,
               iconWidget: Icon(Icons.email_outlined, size: 28),
+              onPressedCallback: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const EmailSignUpScreenStep1(),
+                  ),
+                );
+              },
             ),
 
             const SizedBox(height: 12),
@@ -69,6 +81,9 @@ class LoginSelectionScreen extends StatelessWidget {
               textColor: Colors.black,
               iconWidget: Icon(Icons.email, size: 28),
               isGoogle: true, // 테두리를 그리기 위해 true로 설정
+              onPressedCallback: () {
+                print('이메일 로그인 버튼 클릭됨');
+              },
             ),
             const SizedBox(height: 50), // Bottom padding
             Padding(
@@ -123,16 +138,18 @@ class SocialLoginButton extends StatelessWidget {
   final String text;
   final Color backgroundColor;
   final Color textColor;
-  final Widget iconWidget; // Changed from IconData icon;
+  final Widget iconWidget;
   final bool isGoogle;
+  final VoidCallback? onPressedCallback; // Added optional callback
 
   const SocialLoginButton({
     Key? key,
     required this.text,
     required this.backgroundColor,
     required this.textColor,
-    required this.iconWidget, // Changed from required this.icon,
+    required this.iconWidget,
     this.isGoogle = false,
+    this.onPressedCallback, // Accepted in constructor
   }) : super(key: key);
 
   @override
@@ -147,26 +164,19 @@ class SocialLoginButton extends StatelessWidget {
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
-            // 구글 버튼처럼 배경이 흰색일 때 테두리 추가
             side: isGoogle
                 ? BorderSide(color: Colors.grey.shade300)
                 : BorderSide.none,
           ),
         ),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const EmailSignUpScreenStep1(),
-            ),
-          );
-        },
+        onPressed: onPressedCallback, // Use the provided callback
         child: Row(
           children: [
             iconWidget, // Replaced Icon(icon, size: 28) with iconWidget
             Expanded(
               child: Center(
                 child: Text(
-                  text,
+                  text,머
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
