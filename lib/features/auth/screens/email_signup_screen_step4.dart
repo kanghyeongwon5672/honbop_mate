@@ -1,4 +1,3 @@
-import 'package:daum_postcode_search/daum_postcode_search.dart';
 import 'package:flutter/material.dart';
 import 'address_search_page.dart';
 
@@ -30,10 +29,11 @@ class _EmailSignUpScreenStep4State extends State<EmailSignUpScreenStep4> {
                   MaterialPageRoute(builder: (context) => const AddressSearchPage()),
                 );
 
-                if (result != null && result is DataModel) {
+                if (result != null && result is Map<String, dynamic>) {
                   setState(() {
-                    _address = result.roadAddress ?? result.jibunAddress ?? '주소 없음';
+                    _address = result['roadAddress'] ?? result['jibunAddress'] ?? '주소 없음';
                   });
+                  print('받은 주소 데이터: $result');
                 }
               },
               child: const Text('주소 검색'),
@@ -64,7 +64,6 @@ class _EmailSignUpScreenStep4State extends State<EmailSignUpScreenStep4> {
                   child: ElevatedButton(
                     onPressed: () {
                       // TODO: Implement sign up completion logic
-                      // e.g., send all data to backend
                     },
                     child: const Text('회원가입 완료'),
                   ),
