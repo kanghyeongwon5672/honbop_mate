@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'email_signup_screen_step2.dart';
@@ -11,8 +13,53 @@ class EmailSignUpScreenStep1 extends StatefulWidget {
 
 class _EmailSignUpScreenStep1State extends State<EmailSignUpScreenStep1> {
   final _formKey = GlobalKey<FormState>();
+  final _emailFieldKey = GlobalKey<FormFieldState<String>>(); // Add key for email field
+  final TextEditingController _emailController = TextEditingController(); // Add controller
+  final FocusNode _emailFocusNode = FocusNode(); // Add focus node
+
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool _isVerificationCodeSent = false;
+  bool _isTimerRunning = false;
+  int _timerSeconds = 60;
+  Timer? _timer;
+
+  void startTimer() {
+    setState(() {
+      _isTimerRunning = true;
+      _timerSeconds = 60;
+    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_timerSeconds > 0) {
+          _timerSeconds--;
+        } else {
+          _isTimerRunning = false;
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  void _handleSendVerificationCode() {
+    if (_emailFieldKey.currentState!.validate()) {
+      setState(() {
+        _isVerificationCodeSent = true;
+      });
+      startTimer();
+      // TODO: Implement actual send verification code logic using _emailController.text
+    } else {
+      _emailFocusNode.requestFocus(); // Request focus if validation fails
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _emailController.dispose(); // Dispose controller
+    _emailFocusNode.dispose(); // Dispose focus node
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +79,9 @@ class _EmailSignUpScreenStep1State extends State<EmailSignUpScreenStep1> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      key: _emailFieldKey, // Assign key
+                      controller: _emailController, // Assign controller
+                      focusNode: _emailFocusNode, // Assign focus node
                       decoration: InputDecoration(
                         labelText: '이메일',
                         hintText: 'example@email.com',
@@ -50,31 +100,49 @@ class _EmailSignUpScreenStep1State extends State<EmailSignUpScreenStep1> {
                   ),
                   const SizedBox(width: 12),
                   ElevatedButton(
-                    onPressed: () {
-                      // TODO: Implement send verification code logic
-                    },
+                    onPressed: _isVerificationCodeSent ? null : _handleSendVerificationCode, // Disable after sent
                     child: const Text('인증번호 받기'),
                   ),
                 ],
               ),
               const SizedBox(height: 12),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: '이메일 인증번호',
-                  hintText: '6자리 숫자',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+              if (_isVerificationCodeSent)
+                Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: '이메일 인증번호',
+                        hintText: '6자리 숫자',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      maxLength: 6,
+                      validator: (value) {
+                        if (value == null || value.isEmpty || value.length != 6) {
+                          return '6자리 인증번호를 입력해주세요.';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          '0:${_timerSeconds.toString().padLeft(2, '0')}',
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: _isTimerRunning ? null : startTimer,
+                          child: const Text('재전송'),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                keyboardType: TextInputType.number,
-                maxLength: 6,
-                validator: (value) {
-                  if (value == null || value.isEmpty || value.length != 6) {
-                    return '6자리 인증번호를 입력해주세요.';
-                  }
-                  return null;
-                },
-              ),
               const SizedBox(height: 12),
               TextFormField(
                 obscureText: !_isPasswordVisible,
@@ -176,3 +244,4 @@ class _EmailSignUpScreenStep1State extends State<EmailSignUpScreenStep1> {
     );
   }
 }
+

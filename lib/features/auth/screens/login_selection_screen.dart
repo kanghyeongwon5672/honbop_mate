@@ -176,7 +176,7 @@ class SocialLoginButton extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Text(
-                  text,머
+                  text,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
