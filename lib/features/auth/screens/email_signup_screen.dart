@@ -20,6 +20,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _addressController = TextEditingController();
+  final _detailAddressController = TextEditingController();
 
   // State
   bool _isPasswordVisible = false;
@@ -48,6 +49,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     _addressController.dispose();
+    _detailAddressController.dispose();
     super.dispose();
   }
 
@@ -118,6 +120,14 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
 
       // All checks passed, proceed with signup
       // TODO: Navigate to the main screen or a success page
+      print('Signup successful!');
+      // Added for debugging:
+      print('Email: ${_emailController.text}');
+      print('Nickname: ${_nicknameController.text}');
+      print('Age Range: $_selectedAgeRange');
+      print('Job Category: $_selectedJobCategory');
+      print('Address: ($_zonecode) $_roadAddress');
+      print('Detail Address: ${_detailAddressController.text}');
     }
   }
 
@@ -246,6 +256,18 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                   onTap: _searchAddress,
                   readOnly: true,
                   maxLines: 2,
+                ),
+                const SizedBox(height: 16), // 상세 주소 필드와의 간격
+
+                _buildTextField(
+                  controller: _detailAddressController,
+                  label: '상세 주소',
+                  icon: const Icon(Icons.location_on_outlined, color: Colors.grey), // 기본 Material 아이콘 사용
+                  maxLines: 2, // 여러 줄 입력 가능
+                  validator: (value) {
+                    // 상세 주소는 필수가 아닐 수 있으므로 validator는 비워둘 수 있습니다.
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 32),
 
