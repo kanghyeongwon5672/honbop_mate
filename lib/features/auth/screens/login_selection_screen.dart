@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:honbop_mate/features/auth/screens/email_login_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'email_signup_screen_step1.dart';
+import 'email_signup_screen.dart';
 
 class LoginSelectionScreen extends StatelessWidget {
   const LoginSelectionScreen({Key? key}) : super(key: key);
@@ -66,7 +66,7 @@ class LoginSelectionScreen extends StatelessWidget {
               onPressedCallback: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const EmailSignUpScreenStep1(),
+                    builder: (context) => const EmailSignUpScreen(),
                   ),
                 );
               },
