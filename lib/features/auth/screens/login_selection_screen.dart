@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:honbop_mate/features/auth/screens/email_login_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'email_signup_screen_step1.dart';
@@ -75,15 +75,30 @@ class LoginSelectionScreen extends StatelessWidget {
             const SizedBox(height: 12),
 
             // 4. 이메일 로그인 버튼 (흰색 배경에 테두리)
-            SocialLoginButton(
-              text: '이메일 로그인',
-              backgroundColor: Colors.white,
-              textColor: Colors.black,
-              iconWidget: Icon(Icons.email, size: 28),
-              isGoogle: true, // 테두리를 그리기 위해 true로 설정
-              onPressedCallback: () {
-                print('이메일 로그인 버튼 클릭됨');
+            GestureDetector(
+              onTap: () {
+                print("GestureDetector tapped!");
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const EmailLoginScreen(),
+                  ),
+                );
               },
+              child: SocialLoginButton(
+                text: '이메일 로그인',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+                iconWidget: Icon(Icons.email, size: 28),
+                isGoogle: true, // 테두리를 그리기 위해 true로 설정
+                onPressedCallback: () {
+                  print('SocialLoginButton onPressedCallback triggered!');
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const EmailLoginScreen(),
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 50), // Bottom padding
             Padding(
