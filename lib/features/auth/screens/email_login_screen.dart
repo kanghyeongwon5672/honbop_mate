@@ -16,7 +16,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF14A3A3), // 배경색
+      backgroundColor: const Color(0xFFF69420), // 배경색
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -191,7 +191,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: MyBottomNavigationBar(),
+      //bottomNavigationBar: MyBottomNavigationBar(),
     );
   }
 }

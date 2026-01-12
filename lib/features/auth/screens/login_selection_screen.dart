@@ -11,7 +11,7 @@ class LoginSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF14A3A3), // 배경색 (이미지와 유사한 청록색)
+      backgroundColor: const Color(0xFFF69420),// (0xFF14A3A3), // 배경색 (이미지와 유사한 청록색)
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
