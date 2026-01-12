@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:honbop_mate/splash_screen.dart'; // Add this import for SplashScreen
 
 void main() {
   runApp(const MyApp());
@@ -10,54 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor: const Color(0xFF14A3A3), // 배경색 (이미지와 유사한 청록색)
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // 1. 카카오 버튼
-              SocialLoginButton(
-                text: '카카오톡으로 시작',
-                backgroundColor: const Color(0xFFFFE812),
-                textColor: Colors.black,
-                icon: Icons.chat_bubble,
-              ),
-              const SizedBox(height: 12), // 버튼 사이 간격
-              // 2. 구글 버튼 (요청하신 부분)
-              SocialLoginButton(
-                text: '구글로 시작',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-                icon: Icons.g_mobiledata,
-                // 실제 프로젝트에선 이미지 로고 사용 권장
-                isGoogle: true,
-              ),
-              // ... 기존 카카오, 구글 버튼 아래에 추가
-              const SizedBox(height: 12), // 버튼 사이 간격
-              // 3. 이메일 가입 버튼 (진회색)
-              SocialLoginButton(
-                text: '이메일로 가입',
-                backgroundColor: const Color(0xFF424242), // 진회색
-                textColor: Colors.white,
-                icon: Icons.email_outlined,
-              ),
-
-              const SizedBox(height: 12),
-
-              // 4. 이메일 로그인 버튼 (흰색 배경에 테두리)
-              SocialLoginButton(
-                text: '이메일 로그인',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-                icon: Icons.email,
-                isGoogle: true, // 테두리를 그리기 위해 true로 설정
-              ),
-            ],
-          ),
-        ),
+      theme: ThemeData(
+        primaryColor: Color(0xFF14A3A3),
+        primarySwatch: Colors.teal,
+        useMaterial3: true,
       ),
+      home: const SplashScreen(),
     );
   }
 }
