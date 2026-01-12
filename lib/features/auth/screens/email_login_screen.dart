@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:honbop_mate/features/auth/screens/my_bottom_navigationBar.dart';
 
 class EmailLoginScreen extends StatefulWidget {
   const EmailLoginScreen({super.key});
@@ -33,10 +34,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(flex: 2),
-                Image.asset(
-                  'assets/login_logo.png',
-                  height: 120,
-                ),
+                Image.asset('assets/login_logo.png', height: 120),
                 const SizedBox(height: 20),
                 const Text(
                   '혼밥 메이트를 찾는 가장 쉬운 방법',
@@ -57,12 +55,16 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
                     ),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 15,
+                      horizontal: 20,
+                    ),
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value == null || value.isEmpty || !value.contains('@')) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        !value.contains('@')) {
                       return '유효한 이메일을 입력해주세요.';
                     }
                     return null;
@@ -79,8 +81,10 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
                     ),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 15,
+                      horizontal: 20,
+                    ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isPasswordVisible
@@ -103,9 +107,9 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   },
                 ),
                 Theme(
-                  data: Theme.of(context).copyWith(
-                    unselectedWidgetColor: Colors.white,
-                  ),
+                  data: Theme.of(
+                    context,
+                  ).copyWith(unselectedWidgetColor: Colors.white),
                   child: CheckboxListTile(
                     title: const Text(
                       '아이디 저장',
@@ -143,9 +147,10 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                     child: const Text(
                       '로그인',
                       style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -155,22 +160,28 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   children: [
                     TextButton(
                       onPressed: () {},
-                      child: const Text('아이디 찾기',
-                          style: TextStyle(color: Colors.white)),
+                      child: const Text(
+                        '아이디 찾기',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                     const Text('|', style: TextStyle(color: Colors.white70)),
                     TextButton(
                       onPressed: () {},
-                      child: const Text('비밀번호 찾기',
-                          style: TextStyle(color: Colors.white)),
+                      child: const Text(
+                        '비밀번호 찾기',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                     const Text('|', style: TextStyle(color: Colors.white70)),
                     TextButton(
                       onPressed: () {
                         // TODO: 회원가입 화면으로 이동
                       },
-                      child: const Text('회원가입',
-                          style: TextStyle(color: Colors.white)),
+                      child: const Text(
+                        '회원가입',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -180,6 +191,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: MyBottomNavigationBar(),
     );
   }
 }
